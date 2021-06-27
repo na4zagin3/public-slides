@@ -1,0 +1,260 @@
+
+@require: class-slydifi/theme/plain
+
+let satyrographos-logo =
+  FigBox.include-image 5cm `logo.pdf`
+
+in
+
+%"plain"の部分を変えてテーマ変更が可能
+SlydifiPlain.document(|
+%draft-mode=true;
+draft-mode=false;
+%テーマを変えるにはモジュール名の変更も必要
+|)'<
+  +make-title(|
+  title = {|Satyrographos 0.0.3 新機能（予定）|};
+  author = {
+  | Sakamoto Noriaki `@na4zagin3`
+  |};
+  date = {|2021年6月26日|};
+  |);
+
+  +frame{目次}<
+    +listing{
+      * Satyrographosのあらまし
+      * 歴史
+      * 何をするのか
+      * 0.0.3版新機能（予定）
+    }
+  >
+
+  +frame{Satyrographosのあらまし}<
+    +fig-on-left(satyrographos-logo)<
+      +listing{
+        * \SATySFi;用パッケージマネージャー
+        ** OPAM, (Haskell) Stack, Pyenv に相当
+        * GitHub: `na4zagin3/satyrographos`
+        * 標語：有再現性ビルド
+        * バックエンドにOPAMを使用
+        * 有志による周辺環境が作られている
+        ** `@matsud224`氏作Satyrographos Package Index
+        ** `@amutake`氏作docker-satysfi
+      }
+    >
+  >
+
+  +frame{歴史}<
+    +listing{
+      * Satyrographos 0.0.1 2018-10-21
+      ** \SATySFi;ライブラリをOPAMパッケージとして配布可能に
+      * Satyrographos 0.0.2 2019-09-10
+      ** ビルドファイルSatyristesを追加
+      * Satyrographos 0.0.3 2021-??-??
+      ** 文書作成者支援機能が追加される予定
+    }
+  >
+
+  +frame{Satyrographosは何ぞ}<
+    +listing{
+      * \SATySFi;用ライブラリをOPAMパッケージとして配布可能に
+    }
+    +code(`
+      (lang 0.0.2)
+      
+      (library
+        (name "great-package")
+        (version "1.0")
+        (sources
+          ((fontDir "fonts")
+           (hash "fonts.satysfi-hash" "hash/fonts.satysfi-hash")
+           (packageDir "packages")))
+        (opam "satysfi-great-package.opam")
+        (dependencies ((fonts-theano ()))))
+    `);
+  >
+
+  +frame{Satyrographosは何ぞ}<
+    +listing{
+      * \SATySFi;用ライブラリのドキュメントもライブラリ化可
+    }
+    +code(`
+      ;; ...
+
+      (libraryDoc
+        (name "great-package-doc")
+        (version "1.0")
+        (build ((satysfi "great-package.saty")))
+        (sources
+          ((doc "great-package.pdf" "./great-package.pdf")))
+        (opam "satysfi-great-package-doc.opam")
+        (dependencies ((great-package ()))))
+    `);
+  >
+
+  +multiframe(2){Satyrographosは何ぞ}<
+    +listing{
+      * \SATySFi;用ライブラリが\SATySFi;で利用可能に
+    }
+    +code(`
+      $ satyrographos satysfi -l slydifi -- slide.saty
+    `);
+    +p{上と大体同じ}
+    +code(`
+      $ satyrographos install -l slydifi
+      $ satysfi slide.saty
+    `);
+
+    +select(SlydifiOverlay.till 1)<
+      +listing{
+        * OPAMスイッチ中の`slydifi`と依存ライブラリを読み込み
+        * 適当な場所に設けた`LIBROOT`にインストール
+        * \SATySFi;を起動
+      }
+    ><
+      +p{※正確には}
+      +code(`
+        $ satyrographos install -l slydifi <どこか>
+        $ satysfi -C <どこか> --no-default-config slide.saty
+      `);
+    >
+  >
+
+  +frame{Satyrographosは何ぞ}<
+    +listing{
+      * インポートの誤りやOPAMファイルの記述誤りも検出可。例：
+      ** `@require: fss/fss` がありながら、`Satyristes`やOPAMファイルに`fss`ライブラリへの依存が記述されていない
+      ** 存在しないファイルを `@import` や `@require` しようとする等
+    }
+    +code(`
+      $ satyrographos lint
+      Satyristes:2:1: (module test-lib):
+      satysfi-test-lib.opam:
+      Warning: opam-file/dependency
+        The OPAM file lacks dependencies on specified SATySFi
+        libraries: (base).
+
+      1 problem(s) found.
+    `);
+  >
+
+  +frame{0.0.3の方針}<
+    +listing{
+      * ライブラリだけでなく、文書作成にも使えるように
+      ** → buildサブコマンド、ロックダウン
+      * 新機能は OPAM に全面依存するように
+      ** → OPAMローカルスイッチ
+    }
+  >
+
+  +frame{buildサブコマンド（実験中）}<
+    +listing{
+      * 文書用の`doc`節を`Satyristes`に追加
+    }
+    +code(`
+      (lang "0.0.3")
+
+      (doc
+        (name "main")
+        (build ((satysfi main.saty -o main.pdf)))
+        (dependencies
+          (dist          ;; 依存ライブラリのバージョン制約記述に関しては
+           fss           ;; 考え中
+           class-slydifi)))
+    `);
+    +code(`
+      $ satyrographos build
+    `);
+  >
+
+  +frame{自動生成パッケージ（実験中）}<
+    +listing{
+      * 環境依存情報を\SATySFi;側で利用するために、パッケージを自動生成
+      ** `$today`: 現在日時
+      ** `$fonts`: フォント一覧
+      ** `$libraries`: ライブラリ一覧
+      ** `$fonts-system`: システムフォント
+    }
+    +code(`
+      (doc
+        (name "main")
+        (build ((satysfi main.saty -o main.pdf)))
+        (dependencies (dist)))
+
+        (autogen ($fonts-system $today))
+    `);
+  >
+
+  +frame{ロックダウン（実験中）}<
+    +listing{
+      * 環境依存情報を保存・復帰→有再現性ビルドを実現
+      * 環境依存情報：
+      ** \SATySFi;環境：現在のOPAMスイッチに存在する\br;%
+         OCamlコンパイラ、OCamlライブラリ、SATySFiライブラリ\br;%
+         のバージョン一覧
+      ** 自動生成パッケージの内容：現在日時等
+    }
+    +code(`
+      $ satyrographos lockdown save
+
+      $ satyrographos lockdown restore
+    `);
+  >
+
+  +frame{ロックダウン（実験中）}<
+    +code(`
+      $ cat lockdown.yaml
+
+      satyrographos: 0.0.3
+      dependencies:
+      - Opam
+      - packages:
+        - name: angstrom
+          version: 0.15.0
+        - name: astring
+          version: 0.8.5
+
+      ...
+    `);
+  >
+
+  +frame{OPAMローカルスイッチ（構想・実装中）}<
+    +listing{
+      * buildサブコマンドの実行時や、ロックダウン情報の復元時に
+        OPAMローカルスイッチに\SATySFi;環境を構築
+      ** システムや各文書の\SATySFi;環境が全て独立に管理可能
+      ** 対応OCamlコンパイラバージョンが異なる\SATySFi;も対応可能に
+      *** Satyrographos 0.0.3 では、\SATySFi; 0.0.3 から 0.0.7 まで対応予定
+    }
+  >
+
+
+  +frame{新規作成テンプレートプラグイン（構想中）のプラグイン化}<
+    +listing{
+      * 新規作成テンプレートをOPAMパッケージとして配布可能に
+      ** 現在はSatyrographos内にハードコードされている
+      * テンプレート用のフォーマットとしてEPAR: Extensible Plain-text Archive (https://github.com/na4zagin3/epar)を整備中
+    }
+    +code(`
+    #EPAR: 0.2
+    
+    --- file1.saty
+
+    content1
+    `);
+  >
+
+  +frame{まとめ}<
+    +listing{
+      * Satyrographosとは
+      ** パッケージマネージャー
+      ** 有再現性ビルド実現が目標
+      * 次版の新機能は文書作成者向けが主
+      ** buildサブコマンド
+      ** 自動生成パッケージ（`$today`等）
+      ** ロックダウン
+      ** OPAMローカルスイッチ
+      ** 新規作成テンプレートのプラグイン化
+    }
+  >
+>

@@ -1,0 +1,252 @@
+satyrographos: 0.0.3
+dependencies:
+- Opam
+- packages:
+  - name: angstrom
+    version: 0.15.0
+  - name: astring
+    version: 0.8.5
+  - name: base
+    version: v0.14.1
+  - name: base-bigarray
+    version: base
+  - name: base-bytes
+    version: base
+  - name: base-threads
+    version: base
+  - name: base-unix
+    version: base
+  - name: base_bigstring
+    version: v0.14.0
+  - name: base_quickcheck
+    version: v0.14.1
+  - name: batteries
+    version: 3.3.0
+  - name: bigarray-compat
+    version: 1.0.0
+  - name: bigstringaf
+    version: 0.7.0
+  - name: bin_prot
+    version: v0.14.0
+  - name: biniou
+    version: 1.2.1
+  - name: bos
+    version: 0.2.0
+  - name: camlimages
+    version: 5.0.4
+  - name: camlpdf
+    version: 2.3.1+satysfi
+  - name: camomile
+    version: 1.0.2
+  - name: cmdliner
+    version: 1.0.4
+  - name: conf-pkg-config
+    version: '2'
+  - name: core
+    version: v0.14.1
+  - name: core_kernel
+    version: v0.14.1
+  - name: cppo
+    version: 1.6.7
+  - name: csexp
+    version: 1.5.1
+  - name: ctypes
+    version: 0.18.0
+  - name: depext
+    version: transition
+  - name: dune
+    version: 2.8.5
+  - name: dune-configurator
+    version: 2.8.5
+  - name: easy-format
+    version: 1.3.2
+  - name: fieldslib
+    version: v0.14.0
+  - name: fileutils
+    version: 0.6.3
+  - name: fmt
+    version: 0.8.9
+  - name: fpath
+    version: 0.7.3
+  - name: integers
+    version: 0.4.0
+  - name: jane-street-headers
+    version: v0.14.0
+  - name: jbuilder
+    version: 1.0+beta20.2
+  - name: json-derivers
+    version: 1.0.0
+  - name: jst-config
+    version: v0.14.0
+  - name: logs
+    version: 0.7.0
+  - name: menhir
+    version: '20210419'
+  - name: menhirLib
+    version: '20210419'
+  - name: menhirSdk
+    version: '20210419'
+  - name: num
+    version: '1.4'
+  - name: ocaml
+    version: 4.11.1
+  - name: ocaml-base-compiler
+    version: 4.11.1
+  - name: ocaml-compiler-libs
+    version: v0.12.3
+  - name: ocaml-config
+    version: '1'
+  - name: ocaml-migrate-parsetree
+    version: 2.1.0
+  - name: ocaml-syntax-shims
+    version: 1.0.0
+  - name: ocamlbuild
+    version: 0.14.0
+  - name: ocamlfind
+    version: 1.9.1
+  - name: ocamlgraph
+    version: 2.0.0
+  - name: octavius
+    version: 1.2.2
+  - name: omd
+    version: 1.3.1
+  - name: opam-core
+    version: 2.0.8
+  - name: opam-depext
+    version: 1.1.5
+  - name: opam-file-format
+    version: 2.1.0
+  - name: opam-format
+    version: 2.0.8
+  - name: opam-repository
+    version: 2.0.8
+  - name: opam-state
+    version: 2.0.8
+  - name: otfm
+    version: 0.3.7+satysfi
+  - name: parsexp
+    version: v0.14.0
+  - name: posixat
+    version: v0.14.0
+  - name: ppx_assert
+    version: v0.14.0
+  - name: ppx_base
+    version: v0.14.0
+  - name: ppx_bench
+    version: v0.14.1
+  - name: ppx_bin_prot
+    version: v0.14.0
+  - name: ppx_cold
+    version: v0.14.0
+  - name: ppx_compare
+    version: v0.14.0
+  - name: ppx_custom_printf
+    version: v0.14.1
+  - name: ppx_derivers
+    version: 1.2.1
+  - name: ppx_deriving
+    version: 5.2.1
+  - name: ppx_deriving_yojson
+    version: 3.6.1
+  - name: ppx_enumerate
+    version: v0.14.0
+  - name: ppx_expect
+    version: v0.14.1
+  - name: ppx_fields_conv
+    version: v0.14.2
+  - name: ppx_fixed_literal
+    version: v0.14.0
+  - name: ppx_hash
+    version: v0.14.0
+  - name: ppx_here
+    version: v0.14.0
+  - name: ppx_inline_test
+    version: v0.14.1
+  - name: ppx_jane
+    version: v0.14.0
+  - name: ppx_js_style
+    version: v0.14.0
+  - name: ppx_let
+    version: v0.14.0
+  - name: ppx_module_timer
+    version: v0.14.0
+  - name: ppx_optcomp
+    version: v0.14.1
+  - name: ppx_optional
+    version: v0.14.0
+  - name: ppx_pipebang
+    version: v0.14.0
+  - name: ppx_sexp_conv
+    version: v0.14.3
+  - name: ppx_sexp_message
+    version: v0.14.1
+  - name: ppx_sexp_value
+    version: v0.14.0
+  - name: ppx_stable
+    version: v0.14.1
+  - name: ppx_string
+    version: v0.14.1
+  - name: ppx_typerep_conv
+    version: v0.14.2
+  - name: ppx_variants_conv
+    version: v0.14.1
+  - name: ppxlib
+    version: 0.22.0
+  - name: re
+    version: 1.9.0
+  - name: result
+    version: '1.5'
+  - name: rresult
+    version: 0.6.0
+  - name: satyrographos
+    version: 0.0.2.10
+  - name: satysfi
+    version: 0.0.6
+  - name: seq
+    version: base
+  - name: sexplib
+    version: v0.14.0
+  - name: sexplib0
+    version: v0.14.0
+  - name: shexp
+    version: v0.14.0
+  - name: spawn
+    version: v0.13.0
+  - name: splittable_random
+    version: v0.14.0
+  - name: stdio
+    version: v0.14.0
+  - name: stdlib-shims
+    version: 0.3.0
+  - name: stringext
+    version: 1.6.0
+  - name: time_now
+    version: v0.14.0
+  - name: timezone
+    version: v0.14.0
+  - name: topkg
+    version: 1.0.3
+  - name: typerep
+    version: v0.14.0
+  - name: uchar
+    version: 0.0.2
+  - name: uri
+    version: 4.2.0
+  - name: uri-sexp
+    version: 4.2.0
+  - name: uutf
+    version: 1.0.2
+  - name: variantslib
+    version: v0.14.0
+  - name: yaml
+    version: 2.1.0
+  - name: yojson
+    version: 1.7.0
+  - name: yojson-with-position
+    version: 1.4.2+satysfi
+  repos:
+  - name: default
+    url: https://opam.ocaml.org/
+  - name: satysfi-external
+    url: git+https://github.com/gfngfn/satysfi-external-repo.git
+autogen: {}

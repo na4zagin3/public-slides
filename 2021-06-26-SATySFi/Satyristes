@@ -1,0 +1,14 @@
+(lang "0.0.3")
+
+(doc
+  (name  "main")
+  (build ((satysfi main.saty -o main.pdf)))
+  ; (autogen ($fonts $libraries $today $citeproc))
+   (autogen ($libraries $today))
+  (dependencies
+   (;; Standard library
+    dist
+    ;; Third-party library
+    fss
+    class-slydifi
+    )))
